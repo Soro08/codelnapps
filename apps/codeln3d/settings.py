@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import clnapp.tasks
+# import clnapp.tasks
 import os
 from pathlib import Path
 from celery.schedules import crontab
@@ -134,7 +134,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
 
-
+CELERY_IMPORTS = ("clnapp.tasks",)
 CELERY_BEAT_SCHEDULE = {
     "assign_pionneer_badge": {
         "task": "clnapp.tasks.assign_pionneer_badge",

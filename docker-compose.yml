@@ -11,17 +11,17 @@ services:
         depends_on:
             - redis
     redis:
-        image: redis:alpine
+        image: redis:7-alpine
     celery:
         build: ./apps
-        command: celery -A core worker -l info
+        command: celery -A codeln3d worker -l info
         env_file:
             - ./.env
         depends_on:
             - redis
     celery-beat:
         build: ./apps
-        command: celery -A core beat -l info
+        command: celery -A codeln3d beat -l info
         env_file:
             - ./.env
         depends_on:
@@ -29,7 +29,7 @@ services:
 
     dashboard:
         build: ./apps
-        command: celery flower -A core --port=5555 --broker=redis://redis:6379/0
+        command: celery flower -A codeln3d --port=5555 --broker=redis://redis:6379/0
         ports:
             - 5555:5555
         env_file:
