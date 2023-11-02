@@ -1,0 +1,54 @@
+[
+	{
+		"model": "clnapp.model3d",
+		"pk": 1,
+		"fields": {
+			"title": "Lnd",
+			"description": "help",
+			"file": "model/Pierogi_Mold.stl",
+			"author": 2,
+			"nb_views": 0,
+			"created_at": "2023-11-01T23:17:40.152Z",
+			"updated_at": "2023-11-01T23:20:42.211Z"
+		}
+	},
+	{
+		"model": "clnapp.model3d",
+		"pk": 2,
+		"fields": {
+			"title": "m2",
+			"description": "Hello",
+			"file": "model/mayan-planter.stl",
+			"author": 2,
+			"nb_views": 1001,
+			"created_at": "2023-11-01T23:37:48.934Z",
+			"updated_at": "2023-11-02T18:08:03.907Z"
+		}
+	},
+	{
+		"model": "clnapp.model3d",
+		"pk": 3,
+		"fields": {
+			"title": "m3",
+			"description": "hhh",
+			"file": "model/mayan-planter_ywEzzkU.stl",
+			"author": 2,
+			"nb_views": 0,
+			"created_at": "2023-11-01T23:38:22.341Z",
+			"updated_at": "2023-11-01T23:43:44.271Z"
+		}
+	},
+	{
+		"model": "clnapp.model3d",
+		"pk": 4,
+		"fields": {
+			"title": "m4",
+			"description": "jjk",
+			"file": "model/mayan-planter_cjrps04.stl",
+			"author": 2,
+			"nb_views": 1,
+			"created_at": "2023-11-01T23:44:49.250Z",
+			"updated_at": "2023-11-01T23:44:49.250Z"
+		}
+	}
+]

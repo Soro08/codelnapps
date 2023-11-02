@@ -1,0 +1,17 @@
+[
+	{
+		"model": "clnapp.badge",
+		"pk": 1,
+		"fields": { "name": "Collector", "logo": "badge/collector.png" }
+	},
+	{
+		"model": "clnapp.badge",
+		"pk": 2,
+		"fields": { "name": "Pionner", "logo": "badge/pionner.png" }
+	},
+	{
+		"model": "clnapp.badge",
+		"pk": 3,
+		"fields": { "name": "Star", "logo": "badge/star.png" }
+	}
+]
