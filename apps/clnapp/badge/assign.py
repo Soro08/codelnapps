@@ -19,6 +19,5 @@ def user_has_badge(user, badge_name):
     """
     if UserBadge.objects.filter(badge__name=badge_name, user=user).exists():
         return True
-
     else:
         return False
