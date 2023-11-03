@@ -1,10 +1,11 @@
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework import routers
 from django.urls import path, include
-from clnapp.views import UserViewSet
+from clnapp.views import UserViewSet, Model3dViewSet
 
 router = routers.DefaultRouter()
 router.register("users", UserViewSet, basename="users")
+router.register("model3d", Model3dViewSet, basename="model3d")
 
 
 urlpatterns = [
