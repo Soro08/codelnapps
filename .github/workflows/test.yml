@@ -53,7 +53,7 @@ jobs:
           run: docker-compose -f docker-compose.ci.yml build
         - name: Push to Docker Hub
           run: |
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery-beat
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_dashboard
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_web
+              docker push ${{secrets.DOCKER_USER}}/codeln3d_celery
+              docker push ${{secrets.DOCKER_USER}}/codeln3d_celery-beat
+              docker push ${{secrets.DOCKER_USER}}/codeln3d_dashboard
+              docker push ${{secrets.DOCKER_USER}}/codeln3d_web
