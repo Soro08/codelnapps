@@ -7,9 +7,13 @@ env:
     REGISTRY: docker.io
     DEBUG: ${{ secrets.DEBUG }}
     SECRET_KEY: ${{ secrets.SECRET_KEY }}
-    DJANGO_ALLOWED_HOSTS: ${{ vars.ACTION_DJANGO_ALLOWED_HOSTS }}
-    CELERY_BROKER: ${{ vars.CELERY_BROKER }}
-    CELERY_BACKEND: ${{ vars.CELERY_BACKEND }}
+    DJANGO_ALLOWED_HOSTS: ${{ secrets.ACTION_DJANGO_ALLOWED_HOSTS }}
+    CELERY_BROKER: ${{ secrets.CELERY_BROKER }}
+    CELERY_BACKEND: ${{ secrets.CELERY_BACKEND }}
+    WEB_IMAGE: ${{ secrets.WEB_IMAGE }}
+    CELERY_IMAGE: ${{ secrets.CELERY_IMAGE }}
+    BEAT_IMAGE: ${{ secrets.BEAT_IMAGE }}
+    DASH_IMAGE: ${{ secrets.DASH_IMAGE }}
 
 jobs:
     test_project:
@@ -45,15 +49,15 @@ jobs:
               docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
         - name: Pull Web and nginx image # push The image to the docker hub
           run: |
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery || true
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery-beat || true
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_dashboard || true
-              docker pull ${{secrets.DOCKER_USER}}/codeln3d_web || true
-        - name: Build Web and nginx image
+              docker pull push $WEB_IMAGE || true
+              docker pull $CELERY_IMAGE || true
+              docker pull $BEAT_IMAGE || true
+              docker pull $DASH_IMAGE || true
+        - name: Build docker compose
           run: docker-compose -f docker-compose.ci.yml build
-        - name: Push to Docker Hub
+        - name: Push all images to Docker Hub
           run: |
-              docker push ${{secrets.DOCKER_USER}}/codeln3d_celery
-              docker push ${{secrets.DOCKER_USER}}/codeln3d_celery-beat
-              docker push ${{secrets.DOCKER_USER}}/codeln3d_dashboard
-              docker push ${{secrets.DOCKER_USER}}/codeln3d_web
+              docker push $WEB_IMAGE
+              docker push $CELERY_IMAGE
+              docker push $BEAT_IMAGE
+              docker push $DASH_IMAGE
