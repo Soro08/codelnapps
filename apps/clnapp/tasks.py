@@ -12,15 +12,21 @@ class BaseTaskWithRetry(Task):
 
 @shared_task(bind=True, base=BaseTaskWithRetry)
 def assign_star_badge(self):
-    logger.info("The sample task just ran.")
+    try:
+        call_command(
+            "assign_badge_pionneer",
+        )
+    except Exception as e:
+        logger.error(f"Task assign_badge_pionneer error: {str(e)}")
+        raise Exception()
 
 
 @shared_task(bind=True, base=BaseTaskWithRetry)
 def assign_pionneer_badge(self):
-    logger.info("The sample task just ran.")
-    # if not random.choice([0, 1]):
-    #     raise Exception()
-    # else:
-    #     call_command(
-    #         "mc",
-    #     )
+    try:
+        call_command(
+            "assign_badge_pionneer",
+        )
+    except Exception as e:
+        logger.error(f"Task assign_badge_pionneer error: {str(e)}")
+        raise Exception()
