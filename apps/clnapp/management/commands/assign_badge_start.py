@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db.models import Subquery, OuterRef
 
 from clnapp.badge import add_user_bage
@@ -7,7 +7,7 @@ from clnapp.models.constants import CONDITION_START, BADGE_START
 
 
 class Command(BaseCommand):
-    help = "A description of the command"
+    help = "This command awards the star badge to all users whose 3d models has been viewed more than 1000 times."
 
     def handle(self, *args, **options):
         users_with_star_badge = UserBadge.objects.filter(
@@ -20,3 +20,5 @@ class Command(BaseCommand):
 
         for m3d in model3ds:
             add_user_bage(m3d.author, BADGE_START)
+
+        self.stdout.write(self.style.SUCCESS(f"{m3d.count()} badge distribués."))

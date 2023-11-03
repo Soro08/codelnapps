@@ -11,6 +11,7 @@ class Badge(models.Model):
 
         verbose_name = "Badge"
         verbose_name_plural = "Badges"
+        ordering = ["id"]
 
     def __str__(self):
         """Unicode representation of Badge."""
@@ -23,6 +24,7 @@ class UserBadge(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     badge = models.ForeignKey(Badge, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
+    ordering = ["id"]
 
     class Meta:
         """Meta definition for User Badge."""

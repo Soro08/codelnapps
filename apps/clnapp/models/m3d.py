@@ -18,6 +18,7 @@ class Model3d(models.Model):
 
         verbose_name = "Model3d"
         verbose_name_plural = "Model3ds"
+        ordering = ["-created_at"]
 
     def __str__(self):
         """Unicode representation of Model3d."""
