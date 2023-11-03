@@ -2,6 +2,9 @@ name: Django CI
 
 on: [pull_request, push]
 env:
+    DOCKER_USER: ${{secrets.DOCKER_USER}}
+    DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    REGISTRY: docker.io
     DEBUG: ${{ secrets.DEBUG }}
     SECRET_KEY: ${{ secrets.SECRET_KEY }}
     DJANGO_ALLOWED_HOSTS: ${{ vars.ACTION_DJANGO_ALLOWED_HOSTS }}
@@ -27,10 +30,29 @@ jobs:
             - run: |
                   cd apps/
                   python manage.py test
-    next_job:
-        runs-on: ubuntu-latest # operating system your code will run on
-        needs: test_project
+
+    push-image-to-docker-hub:  # job name
+        runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-python@v2
-            - run: cat ./apps/codeln3d/settings/base.py
+        - uses: actions/checkout@v2 # first action : checkout source code
+        - name: Create env file
+          run: |
+              chmod +x ./setup_env.sh
+              bash ./setup_env.sh
+        - name: docker login
+          run: | # log into docker hub account
+              docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
+        - name: Pull Web and nginx image # push The image to the docker hub
+          run: |
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery || true
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery-beat || true
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_dashboard || true
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_web || true
+        - name: Build Web and nginx image
+          run: docker-compose -f docker-compose.ci.yml build
+        - name: Push to Docker Hub
+          run: |
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_celery-beat
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_dashboard
+              docker pull ${{secrets.DOCKER_USER}}/codeln3d_web
