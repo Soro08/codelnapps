@@ -1,29 +1,24 @@
 name: Django CI
 
 on: [pull_request, push]
+env:
+    DEBUG: ${{ secrets.DEBUG }}
+    SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    DJANGO_ALLOWED_HOSTS: ${{ vars.ACTION_DJANGO_ALLOWED_HOSTS }}
+    CELERY_BROKER: ${{ vars.CELERY_BROKER }}
+    CELERY_BACKEND: ${{ vars.CELERY_BACKEND }}
 
 jobs:
-    create-envfile:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Make envfile
-              uses: SpicyPizza/create-envfile@v2.0
-              with:
-                  envkey_DEBUG: ${{ secrets.DEBUG }}
-                  envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-                  envkey_DJANGO_ALLOWED_HOSTS: ${{ vars.ACTION_DJANGO_ALLOWED_HOSTS }}
-                  envkey_CELERY_BROKER: ${{ vars.CELERY_BROKER }}
-                  envkey_CELERY_BACKEND: ${{ vars.CELERY_BACKEND }}
-                  directory: apps
-                  file_name: .env
-                  fail_on_empty: false
-                  sort_keys: false
     test_project:
         runs-on: ubuntu-latest # operating system your code will run on
-        needs: create-envfile
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-python@v2
+            - name: Run script file
+              run: |
+                  chmod +x ./apps/setup_env.sh
+                  bash ./apps/setup_env.sh
+            - run: cat ./apps/.env 
             - run: pip install flake8
             - run: pip install -r apps/requirements.txt # install all our dependencies for the project
             - run: flake8 . # run flake8 test
