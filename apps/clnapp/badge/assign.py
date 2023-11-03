@@ -3,7 +3,7 @@ from clnapp.models import Badge, UserBadge
 
 def add_user_bage(user, badge_name):
     """
-    Ajouter un badge à un utilisateur
+    assign a badge to a user
     """
     badge = Badge.objects.filter(name=badge_name).first()
     if badge:
@@ -15,7 +15,7 @@ def add_user_bage(user, badge_name):
 
 def user_has_badge(user, badge_name):
     """
-    Vérifier si l'utilisateur à déjà un badge donné
+    Check if the user already has a specific badge
     """
     if UserBadge.objects.filter(badge__name=badge_name, user=user).exists():
         return True
