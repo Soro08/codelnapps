@@ -6,8 +6,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
-#
+# Security
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
@@ -22,15 +21,6 @@ STATICFILES_DIRS = (BASE_DIR / "static",)
 ##########
 # database connection
 DATABASES = {
-    "codeln": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "argamato_semiose",
-        "USER": "argamato",
-        "PASSWORD": "bigbogus",
-        "HOST": "localhost",
-        "PORT": 5433,
-        "DISABLE_SERVER_SIDE_CURSORS": True,
-    },
     "test": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "postgres",
@@ -40,7 +30,7 @@ DATABASES = {
         "PORT": 5433,  # default postgres port
     },
 }
-DATABASES["default"] = DATABASES["codeln"]
+DATABASES["default"] = DATABASES["test"]
 
 ##########
 # internationalization
