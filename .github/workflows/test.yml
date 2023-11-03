@@ -11,7 +11,7 @@ jobs:
             - run: pip install flake8
             - run: pip install -r apps/requirements.txt # install all our dependencies for the project
             - run: flake8 . # run flake8 test
-            - run: bash stup_env.sh
+            - run: bash setup_env.sh
             - run: cd apps/
             - run: python manage.py test # run pytest test
 
