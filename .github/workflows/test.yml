@@ -18,7 +18,8 @@ jobs:
               run: |
                   chmod +x ./apps/setup_env.sh
                   bash ./apps/setup_env.sh
-            - run: cat ./apps/.env 
+                  cp ./apps/codeln3d/settings/base.ci.py ./apps/codeln3d/settings/base.py
+            - run: cat ./apps/.env
             - run: pip install flake8
             - run: pip install setuptools
             - run: pip install -r apps/requirements.txt # install all our dependencies for the project
@@ -26,3 +27,10 @@ jobs:
             - run: |
                   cd apps/
                   python manage.py test
+    next_job:
+        runs-on: ubuntu-latest # operating system your code will run on
+        needs: test_project
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-python@v2
+            - run: cat ./apps/codeln3d/settings/base.py

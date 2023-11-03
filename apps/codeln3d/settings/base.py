@@ -34,14 +34,6 @@ DATABASES = {
         "PORT": "",
         "DISABLE_SERVER_SIDE_CURSORS": True,
     },
-    "test": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",  # set in docker-compose.yml
-        "PORT": 5433,  # default postgres port
-    },
 }
 DATABASES["default"] = DATABASES["sqlite3"]
 

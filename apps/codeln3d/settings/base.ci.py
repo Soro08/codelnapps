@@ -22,12 +22,8 @@ STATICFILES_DIRS = (BASE_DIR / "static",)
 # database connection
 DATABASES = {
     "test": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",  # set in docker-compose.yml
-        "PORT": 5433,  # default postgres port
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     },
 }
 DATABASES["default"] = DATABASES["test"]
