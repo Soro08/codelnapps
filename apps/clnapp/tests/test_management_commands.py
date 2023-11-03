@@ -12,7 +12,7 @@ class ManagementCommandsTestCase(TestCase):
         out = StringIO()
         # assign_badge_start
         call_command("assign_badge_pionneer", stdout=out)
-        self.assertIn("Expected output", out.getvalue())
+        self.assertIn("badge distribués", out.getvalue())
 
     def test_assign_badge_start(self):
         """
