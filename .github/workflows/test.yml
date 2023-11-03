@@ -33,12 +33,13 @@ jobs:
 
     push-image-to-docker-hub:  # job name
         runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 
+        needs: test_project
         steps:
         - uses: actions/checkout@v2 # first action : checkout source code
         - name: Create env file
           run: |
-              chmod +x ./apps/setup_env.sh
-              bash ./apps/setup_env.sh
+              chmod +x ./apps/setup_env.ci.sh
+              bash ./apps/setup_env.ci.sh
         - name: docker login
           run: | # log into docker hub account
               docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
