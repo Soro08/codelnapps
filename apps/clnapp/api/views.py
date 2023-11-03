@@ -10,11 +10,12 @@ from .serializers import (
 )
 from .permissions import AuthorOrReadOnly
 
-# Create your views here.
-
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    # use prefetch_related to optimisize queryset performance
+    queryset = User.objects.prefetch_related(
+        "userbadge_set", "userbadge_set__badge"
+    ).all()
     serializer_class = UserSerializer
 
     def get_serializer_class(self):
@@ -29,7 +30,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class Model3dViewSet(viewsets.ModelViewSet):
-    queryset = Model3d.objects.all()
+    # use select_related to optimisize queryset performance
+    queryset = Model3d.objects.select_related("author").all()
     serializer_class = Model3dSerializer
     permission_classes = [AuthorOrReadOnly]
 
