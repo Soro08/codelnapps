@@ -3,15 +3,22 @@ version: "3.8"
 services:
     web:
         image: "${WEB_IMAGE}"
-        command: python manage.py runserver 0.0.0.0:8000
-        ports:
-            - 8000:8000
+        command: gunicorn codeln3d.wsgi:application --bind 0.0.0.0:8000
+        volumes:
+            - static_volume:/home/app/web/staticfiles
+            - media_volume:/home/app/web/media
+        expose:
+            - 8000
         env_file:
             - ./.env
         depends_on:
             - redis
+
     redis:
+        restart: unless-stopped
         image: redis:7-alpine
+        expose:
+            - 6379
     celery:
         image: "${BEAT_IMAGE}"
         command: celery -A codeln3d worker -l info
@@ -29,8 +36,8 @@ services:
 
     dashboard:
         image: "${DASH_IMAGE}"
-        command: celery flower -A codeln3d --port=5555 --broker=redis://redis:6379/0
-        ports:
+        command: "celery flower -A codeln3d --broker=redis://redis:6379/0 --port=5555"
+        expose:
             - 5555:5555
         env_file:
             - ./.env
@@ -39,3 +46,61 @@ services:
             - redis
             - celery
             - celery-beat
+
+    flower:
+        image: mher/flower:0.9.7
+        command: ["flower", "--broker=redis://redis:6379", "--port=5555"]
+        ports:
+            - 5557:5555
+        depends_on:
+            - web
+            - redis
+            - celery
+            - celery-beat
+
+    nginx-proxy:
+        build:
+            context: ./nginx
+            cache_from:
+                - "${NGINX_IMAGE}"
+        image: "${NGINX_IMAGE}"
+        restart: always
+        ports:
+            - 443:443
+            - 80:80
+        volumes:
+            - static_volume:/home/app/web/staticfiles
+            - media_volume:/home/app/web/media
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - certs:/etc/nginx/certs
+            - vhost:/etc/nginx/vhost.d
+            - html:/usr/share/nginx/html
+            - acme:/etc/acme.sh
+        depends_on:
+            - web
+        env_file: .env
+        labels:
+            - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+
+    acme-companion:
+        image: nginxproxy/acme-companion
+        env_file:
+            - ./.env.proxy-companion
+        volumes:
+            - static_volume:/home/app/web/staticfiles
+            - media_volume:/home/app/web/media
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - certs:/etc/nginx/certs
+            - html:/usr/share/nginx/html
+            - vhost:/etc/nginx/vhost.d
+            - acme:/etc/acme.sh
+        depends_on:
+            - nginx-proxy
+
+volumes:
+    static_volume:
+    media_volume:
+    certs:
+    vhost:
+    html:
+    acme:

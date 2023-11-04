@@ -2,24 +2,36 @@ name: Django CI
 
 on: [pull_request, push]
 env:
-    DOCKER_USER: ${{secrets.DOCKER_USER}}
-    DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-    REGISTRY: docker.io
+    # Default
     DEBUG: ${{ secrets.DEBUG }}
     SECRET_KEY: ${{ secrets.SECRET_KEY }}
     DJANGO_ALLOWED_HOSTS: ${{ secrets.ACTION_DJANGO_ALLOWED_HOSTS }}
     CELERY_BROKER: ${{ secrets.CELERY_BROKER }}
     CELERY_BACKEND: ${{ secrets.CELERY_BACKEND }}
+    # AWS S3
+    AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+    AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+    AWS_STORAGE_BUCKET_NAME: ${{secrets.AWS_STORAGE_BUCKET_NAME}}
+    # Docker images
+    DOCKER_USER: ${{secrets.DOCKER_USER}}
+    DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    REGISTRY: docker.io
     WEB_IMAGE: ${{ secrets.WEB_IMAGE }}
     CELERY_IMAGE: ${{ secrets.CELERY_IMAGE }}
     BEAT_IMAGE: ${{ secrets.BEAT_IMAGE }}
     DASH_IMAGE: ${{ secrets.DASH_IMAGE }}
+    NGINX_IMAGE: ${{ secrets.NGINX_IMAGE }}
+    # Nginx proxy
+    VIRTUAL_HOST: ${{secrets.VIRTUAL_HOST}}
+    VIRTUAL_PORT: ${{secrets.VIRTUAL_PORT}}
+    # let encrypted
+    DEFAULT_EMAIL: ${{secrets.DEFAULT_EMAIL}}
 
 jobs:
     test_project:
         runs-on: ubuntu-latest # operating system your code will run on
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - uses: actions/setup-python@v2
             - name: Run script file
               run: |
@@ -39,7 +51,7 @@ jobs:
         runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 
         needs: test_project
         steps:
-        - uses: actions/checkout@v2 # first action : checkout source code
+        - uses: actions/checkout@v3 # first action : checkout source code
         - name: Create env file
           run: |
               chmod +x ./apps/setup_env.ci.sh
@@ -53,6 +65,7 @@ jobs:
               docker pull $CELERY_IMAGE || true
               docker pull $BEAT_IMAGE || true
               docker pull $DASH_IMAGE || true
+              docker pull $NGINX_IMAGE || true
         - name: Build docker compose
           run: docker-compose -f docker-compose.ci.yml build
         - name: Push all images to Docker Hub
@@ -61,6 +74,7 @@ jobs:
               docker push $CELERY_IMAGE
               docker push $BEAT_IMAGE
               docker push $DASH_IMAGE
+              docker push $NGINX_IMAGE
 
     befor-deploy:
       name: Befor deploy
@@ -79,7 +93,7 @@ jobs:
             username: ${{secrets.SERVER_USER}}
             key: ${{secrets.PRIVATE_KEY}}
             port: 22
-            source: "./.env, ./docker-compose.prod.yml"
+            source: "./nginx, ./.env, ./.env.proxy-companion, ./docker-compose.prod.yml"
             target: "/${{secrets.SERVER_USER}}/project/"
 
     deploy:
@@ -101,6 +115,7 @@ jobs:
               cd /${{secrets.SERVER_USER}}/project/
               export $(cat .env | xargs)
               docker pull push $WEB_IMAGE
+              docker pull $NGINX_IMAGE
               docker pull $CELERY_IMAGE
               docker pull $BEAT_IMAGE
               docker pull $DASH_IMAGE

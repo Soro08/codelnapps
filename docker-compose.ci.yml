@@ -4,12 +4,13 @@ services:
     web:
         build:
             context: ./apps
+            dockerfile: Dockerfile.prod
             cache_from:
                 - "${WEB_IMAGE}"
         image: "${WEB_IMAGE}"
-        command: python manage.py runserver 0.0.0.0:8000
-        ports:
-            - 8000:8000
+        command: gunicorn codeln3d.wsgi:application --bind 0.0.0.0:8000
+        expose:
+            - 8000
         env_file:
             - ./.env
         depends_on:
@@ -46,8 +47,8 @@ services:
                 - "${DASH_IMAGE}"
         image: "${DASH_IMAGE}"
         command: celery flower -A codeln3d --port=5555 --broker=redis://redis:6379/0
-        ports:
-            - 5555:5555
+        expose:
+            - 5555
         env_file:
             - ./.env
         depends_on:
@@ -55,3 +56,43 @@ services:
             - redis
             - celery
             - celery-beat
+
+    nginx-proxy:
+        build:
+            context: ./nginx
+            cache_from:
+                - "${NGINX_IMAGE}"
+        image: "${NGINX_IMAGE}"
+        restart: always
+        ports:
+            - 443:443
+            - 80:80
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - certs:/etc/nginx/certs
+            - vhost:/etc/nginx/vhost.d
+            - html:/usr/share/nginx/html
+            - acme:/etc/acme.sh
+        depends_on:
+            - web
+        env_file: .env
+        labels:
+            - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+
+    acme-companion:
+        image: nginxproxy/acme-companion
+        env_file: .env.proxy-companion
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - certs:/etc/nginx/certs
+            - html:/usr/share/nginx/html
+            - vhost:/etc/nginx/vhost.d
+            - acme:/etc/acme.sh
+        depends_on:
+            - nginx-proxy
+
+volumes:
+    certs:
+    vhost:
+    html:
+    acme:
