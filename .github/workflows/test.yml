@@ -61,3 +61,50 @@ jobs:
               docker push $CELERY_IMAGE
               docker push $BEAT_IMAGE
               docker push $DASH_IMAGE
+
+    befor-deploy:
+      name: Befor deploy
+      runs-on: ubuntu-latest
+      needs: push-image-to-docker-hub
+      steps:
+        - uses: actions/checkout@v3
+        - name: Create env file
+          run: |
+            chmod +x ./apps/setup_env.ci.sh
+            bash ./apps/setup_env.ci.sh
+        - name: copy file via ssh key
+          uses: appleboy/scp-action@v0.1.4
+          with:
+            host: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
+            username: root
+            key: ${{secrets.PRIVATE_KEY}}
+            port: 22
+            source: "./.env, ./docker-compose.yml"
+            target: "/root/project/"
+
+    deploy:
+      runs-on: ubuntu-latest  # Utilisez l'image Ubuntu par défaut
+      needs: befor-deploy
+      steps:
+        - uses: actions/checkout@v3
+        - name: docker login
+          run: | # log into docker hub account
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
+        - name: Deploy using ssh
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
+            username: ubuntu
+            key: ${{secrets.PRIVATE_KEY}}
+            port: 22
+            script: |
+              cd /root/project/
+              export $(cat .env | xargs)
+              docker pull push $WEB_IMAGE
+              docker pull $CELERY_IMAGE
+              docker pull $BEAT_IMAGE
+              docker pull $DASH_IMAGE
+              docker-compose -f docker-compose.prod.yml down || true
+              docker rm -vf $(docker ps -aq) || true
+              docker rmi -f $(docker images -aq) || true
+              docker-compose -f docker-compose.prod.yml up -d
