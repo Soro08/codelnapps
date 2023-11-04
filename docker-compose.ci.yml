@@ -8,7 +8,7 @@ services:
             cache_from:
                 - "${WEB_IMAGE}"
         image: "${WEB_IMAGE}"
-        command: python manage.py runserver 0.0.0.0:8000
+        command: gunicorn codeln3d.wsgi:application --bind 0.0.0.0:8000
         expose:
             - 8000
         env_file:
@@ -61,7 +61,7 @@ services:
         build:
             context: ./nginx
             cache_from:
-            - "${NGINX_IMAGE}"
+                - "${NGINX_IMAGE}"
         image: "${NGINX_IMAGE}"
         restart: always
         ports:
@@ -92,7 +92,7 @@ services:
             - nginx-proxy
 
 volumes:
-  certs:
-  vhost:
-  html:
-  acme:
+    certs:
+    vhost:
+    html:
+    acme:
