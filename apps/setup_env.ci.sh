@@ -19,5 +19,5 @@ echo LETSENCRYPT_HOST=$VIRTUAL_HOST  >> .env
 
 # .env.proxy-companion for ssl
 echo DEFAULT_EMAIL=$DEFAULT_EMAIL  >> .env.proxy-companion
-echo ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory  >> .env.proxy-companion
+#echo ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory  >> .env.proxy-companion
 echo NGINX_PROXY_CONTAINER=nginx-proxy  >> .env.proxy-companion
