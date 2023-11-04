@@ -27,7 +27,7 @@ DATABASES = {
     },
 }
 DATABASES["default"] = DATABASES["test"]
-
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 ##########
 # internationalization
 LANGUAGE_CODE = "en-us"
