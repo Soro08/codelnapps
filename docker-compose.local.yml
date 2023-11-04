@@ -12,7 +12,7 @@ services:
         depends_on:
             - redis
     redis:
-        image: redis:7-alpine
+        image: redis
     celery:
         build:
             context: ./apps

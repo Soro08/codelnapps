@@ -21,16 +21,16 @@
 		"model": "auth.user",
 		"pk": 2,
 		"fields": {
-			"password": "pbkdf2_sha256$600000$Yq5aFQ6vm31WqbYtIziV03$8xKIf7lhVgOk/Mzp3Nqs8V7Fs1sSOGIVQX0fV2skkCY=",
+			"password": "pbkdf2_sha256$600000$glWEnkaGQYYWoOPE78aj7R$4Vdrri6RLtkCgrypM9KdN9t2Hb2vNMzaM3eG4ymvn/k=",
 			"last_login": null,
 			"is_superuser": false,
-			"username": "user1",
-			"first_name": "Nbe",
-			"last_name": "Nbe",
+			"username": "soro2",
+			"first_name": "",
+			"last_name": "",
 			"email": "",
 			"is_staff": false,
 			"is_active": true,
-			"date_joined": "2021-11-01T23:15:08Z",
+			"date_joined": "2021-11-03T08:47:26.707Z",
 			"groups": [],
 			"user_permissions": []
 		}
