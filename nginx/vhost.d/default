@@ -1,4 +1,4 @@
-location /static/ {
+location /staticfiles/ {
   alias /usr/src/app/web/staticfiles/;
   add_header Access-Control-Allow-Origin *;
 }

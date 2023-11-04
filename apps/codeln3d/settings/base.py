@@ -11,12 +11,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = "/staticfiles/"
-MEDIA_URL = "/media/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-MEDIA_ROOT = BASE_DIR / "media"
-STATICFILES_DIRS = (BASE_DIR / "static",)
 
 ##########
 # database connection

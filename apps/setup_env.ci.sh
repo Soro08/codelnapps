@@ -5,7 +5,13 @@ echo DJANGO_ALLOWED_HOSTS="localhost 127.0.0.1 173.212.252.63 [::1]" >> ./.env
 echo CELERY_BROKER=$CELERY_BROKER >> ./.env
 echo CELERY_BACKEND=$CELERY_BACKEND >> ./.env
 
+# AWS S3
+echo USE_AWS_S3=1 >> ./.env
+echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID >> ./.env
+echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> ./.env
+echo AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME >> ./.env
 
+# Docker images
 echo WEB_IMAGE=$WEB_IMAGE >> ./.env
 echo CELERY_IMAGE=$CELERY_IMAGE >> ./.env
 echo BEAT_IMAGE=$BEAT_IMAGE >> ./.env
