@@ -10,3 +10,14 @@ echo WEB_IMAGE=$WEB_IMAGE >> ./.env
 echo CELERY_IMAGE=$CELERY_IMAGE >> ./.env
 echo BEAT_IMAGE=$BEAT_IMAGE >> ./.env
 echo DASH_IMAGE=$DASH_IMAGE >> ./.env
+echo NGINX_IMAGE=$NGINX_IMAGE >> ./.env
+
+# VIRTUAL HOST
+echo VIRTUAL_HOST=$VIRTUAL_HOST  >> .env
+echo VIRTUAL_PORT=$VIRTUAL_PORT  >> .env
+echo LETSENCRYPT_HOST=$VIRTUAL_HOST  >> .env
+
+# .env.proxy-companion for ssl
+echo DEFAULT_EMAIL=$DEFAULT_EMAIL  >> .env.proxy-companion
+echo ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory  >> .env.proxy-companion
+echo NGINX_PROXY_CONTAINER=nginx-proxy  >> .env.proxy-companion

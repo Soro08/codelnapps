@@ -2,18 +2,26 @@ name: Django CI
 
 on: [pull_request, push]
 env:
-    DOCKER_USER: ${{secrets.DOCKER_USER}}
-    DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-    REGISTRY: docker.io
+    # Default
     DEBUG: ${{ secrets.DEBUG }}
     SECRET_KEY: ${{ secrets.SECRET_KEY }}
     DJANGO_ALLOWED_HOSTS: ${{ secrets.ACTION_DJANGO_ALLOWED_HOSTS }}
     CELERY_BROKER: ${{ secrets.CELERY_BROKER }}
     CELERY_BACKEND: ${{ secrets.CELERY_BACKEND }}
+    # Docker images
+    DOCKER_USER: ${{secrets.DOCKER_USER}}
+    DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    REGISTRY: docker.io
     WEB_IMAGE: ${{ secrets.WEB_IMAGE }}
     CELERY_IMAGE: ${{ secrets.CELERY_IMAGE }}
     BEAT_IMAGE: ${{ secrets.BEAT_IMAGE }}
     DASH_IMAGE: ${{ secrets.DASH_IMAGE }}
+    NGINX_IMAGE: ${{ secrets.NGINX_IMAGE }}
+    # Nginx proxy
+    VIRTUAL_HOST: ${{secrets.VIRTUAL_HOST}}
+    VIRTUAL_PORT: ${{secrets.VIRTUAL_PORT}}
+    # let encrypted
+    DEFAULT_EMAIL: ${{secrets.DEFAULT_EMAIL}}
 
 jobs:
     test_project:
@@ -53,6 +61,7 @@ jobs:
               docker pull $CELERY_IMAGE || true
               docker pull $BEAT_IMAGE || true
               docker pull $DASH_IMAGE || true
+              docker pull $NGINX_IMAGE || true
         - name: Build docker compose
           run: docker-compose -f docker-compose.ci.yml build
         - name: Push all images to Docker Hub
@@ -61,6 +70,7 @@ jobs:
               docker push $CELERY_IMAGE
               docker push $BEAT_IMAGE
               docker push $DASH_IMAGE
+              docker push $NGINX_IMAGE
 
     befor-deploy:
       name: Befor deploy
@@ -104,6 +114,7 @@ jobs:
               docker pull $CELERY_IMAGE
               docker pull $BEAT_IMAGE
               docker pull $DASH_IMAGE
+              docker pull $NGINX_IMAGE
               docker-compose -f docker-compose.prod.yml down || true
               docker rm -vf $(docker ps -aq) || true
               docker rmi -f $(docker images -aq) || true
