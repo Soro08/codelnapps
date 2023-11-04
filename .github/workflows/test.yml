@@ -89,7 +89,7 @@ jobs:
             username: ${{secrets.SERVER_USER}}
             key: ${{secrets.PRIVATE_KEY}}
             port: 22
-            source: "./.env, ./.env.proxy-companion, ./docker-compose.prod.yml"
+            source: "./nginx, ./.env, ./.env.proxy-companion, ./docker-compose.prod.yml"
             target: "/${{secrets.SERVER_USER}}/project/"
 
     deploy:
