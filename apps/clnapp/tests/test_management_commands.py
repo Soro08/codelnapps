@@ -10,7 +10,6 @@ class ManagementCommandsTestCase(TestCase):
         2. adds models and check user has badge True
         """
         out = StringIO()
-        # assign_badge_start
         call_command("assign_badge_pionneer", stdout=out)
         self.assertIn("badge distribués", out.getvalue())
 
