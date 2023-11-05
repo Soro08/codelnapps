@@ -18,15 +18,11 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
             "password2",
         ]
-        extra_kwargs = {
-            "password": {"write_only": True, "validators": [validate_password]}
-        }
+        extra_kwargs = {"password": {"write_only": True, "validators": [validate_password]}}
 
     def validate(self, data):
         if data["password"] != data["password2"]:
-            raise serializers.ValidationError(
-                {"password": "Password fields didn't match."}
-            )
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
         del data["password2"]
         return data
 
@@ -57,7 +53,10 @@ class Model3dSerializer(serializers.ModelSerializer):
     class Meta:
         model = Model3d
         fields = "__all__"
-        extra_kwargs = {"author": {"read_only": True}, "nb_views": {"read_only": True}}
+        extra_kwargs = {
+            "author": {"read_only": True},
+            "nb_views": {"read_only": True},
+        }
 
 
 class Model3dDetailSerializer(Model3dSerializer):

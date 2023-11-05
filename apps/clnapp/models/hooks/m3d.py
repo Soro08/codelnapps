@@ -6,18 +6,18 @@ from clnapp.models import Model3d
 
 def user_has_collecter(sender, instance, created, update_fields=None, **kwargs):
     """
-    Vérifier si l'utilisateur a plus de 5 model3d lui attribuler le badge Collector
+    Vérifier si l'utilisateur a plus de 5 model3d
+    lui attribuler le badge Collector
     - compter le nombre de models
     - si le nbr model est >= 5
-        - vérifier si l'utilisateur n'a pas de badge collector, lui attribuer le bage
+        - vérifier si l'utilisateur n'a pas de badge collector,
+        lui attribuer le bage
         - sinon, passer
     - sinon passer
     """
     if created:
         nb = instance.author.model3d_set.count()
-        if nb >= CONDITION_COLLECTOR and not user_has_badge(
-            instance.author, BADGE_COLLECTOR
-        ):
+        if nb >= CONDITION_COLLECTOR and not user_has_badge(instance.author, BADGE_COLLECTOR):
             add_user_bage(instance.author, BADGE_COLLECTOR)
 
 
