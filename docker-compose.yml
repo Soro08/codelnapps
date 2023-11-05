@@ -11,7 +11,7 @@ services:
         depends_on:
             - redis
     redis:
-        image: redis:7-alpine
+        image: redis
     celery:
         image: "${BEAT_IMAGE}"
         command: celery -A codeln3d worker -l info

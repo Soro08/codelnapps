@@ -9,7 +9,7 @@
 			"author": 2,
 			"nb_views": 0,
 			"created_at": "2023-11-01T23:17:40.152Z",
-			"updated_at": "2023-11-01T23:20:42.211Z"
+			"updated_at": "2023-11-03T14:27:21.997Z"
 		}
 	},
 	{
@@ -49,6 +49,19 @@
 			"nb_views": 1,
 			"created_at": "2023-11-01T23:44:49.250Z",
 			"updated_at": "2023-11-01T23:44:49.250Z"
+		}
+	},
+	{
+		"model": "clnapp.model3d",
+		"pk": 5,
+		"fields": {
+			"title": "My model upd",
+			"description": "help",
+			"file": "model/pws_web.wfp",
+			"author": 1,
+			"nb_views": 0,
+			"created_at": "2023-11-03T17:07:02.914Z",
+			"updated_at": "2023-11-03T17:24:08.474Z"
 		}
 	}
 ]
