@@ -1,0 +1,12 @@
+[coverage:run]
+source = .
+omit =
+   */tests/*
+   manage.py
+   asgi.py
+   wsgi.py
+
+[coverage:report]
+fail_under = 90
+show_missing = True
+skip_covered = True

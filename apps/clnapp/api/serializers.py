@@ -18,11 +18,15 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
             "password2",
         ]
-        extra_kwargs = {"password": {"write_only": True, "validators": [validate_password]}}
+        extra_kwargs = {
+            "password": {"write_only": True, "validators": [validate_password]}
+        }
 
     def validate(self, data):
         if data["password"] != data["password2"]:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
         del data["password2"]
         return data
 

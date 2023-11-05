@@ -17,7 +17,9 @@ def user_has_collecter(sender, instance, created, update_fields=None, **kwargs):
     """
     if created:
         nb = instance.author.model3d_set.count()
-        if nb >= CONDITION_COLLECTOR and not user_has_badge(instance.author, BADGE_COLLECTOR):
+        if nb >= CONDITION_COLLECTOR and not user_has_badge(
+            instance.author, BADGE_COLLECTOR
+        ):
             add_user_bage(instance.author, BADGE_COLLECTOR)
 
 
