@@ -79,6 +79,7 @@ jobs:
     befor-deploy:
       name: Befor deploy
       runs-on: ubuntu-latest
+      if: github.ref == 'refs/heads/master'
       needs: push-image-to-docker-hub
       steps:
         - uses: actions/checkout@v3
@@ -98,6 +99,7 @@ jobs:
 
     deploy:
       runs-on: ubuntu-latest  # Utilisez l'image Ubuntu par défaut
+      if: github.ref == 'refs/heads/master'
       needs: befor-deploy
       steps:
         - uses: actions/checkout@v3
