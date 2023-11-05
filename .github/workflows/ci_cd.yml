@@ -5,10 +5,6 @@ on:
     branches: 
       - master
   push:
-  workflow_run:
-    workflows: ["build-and-push"]
-    types: 
-      - completed
 env:
     # Default
     DEBUG: ${{ secrets.DEBUG }}
