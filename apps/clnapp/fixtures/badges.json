@@ -7,7 +7,7 @@
 	{
 		"model": "clnapp.badge",
 		"pk": 2,
-		"fields": { "name": "Pionner", "logo": "badge/pionner.png" }
+		"fields": { "name": "Pionneer", "logo": "badge/pionner.png" }
 	},
 	{
 		"model": "clnapp.badge",

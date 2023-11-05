@@ -2,8 +2,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from clnapp.tests import TestCase
-from clnapp.models import Model3d, UserBadge
-from clnapp.models.constants import BADGE_COLLECTOR
 
 
 class RegisterUserTestCase(TestCase):
