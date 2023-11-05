@@ -5,12 +5,13 @@ def add_user_bage(user, badge_name):
     """
     assign a badge to a user
     """
-    badge = Badge.objects.filter(name=badge_name).first()
-    if badge:
-        ub = UserBadge(badge=badge, user=user)
-        ub.save()
-    else:
-        print("Badge Not found")
+    if not user_has_badge(user, badge_name):
+        badge = Badge.objects.filter(name=badge_name).first()
+        if badge:
+            ub = UserBadge(badge=badge, user=user)
+            ub.save()
+        else:
+            print("Badge Not found")
 
 
 def user_has_badge(user, badge_name):
