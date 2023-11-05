@@ -39,3 +39,12 @@ class RegisterUserTestCase(TestCase):
 
         nb_user_after_add = User.objects.count()
         self.assertNotEqual(nb_user_before_add + 1, nb_user_after_add)
+
+    def test_get_all_users(self):
+        response = self.client.get(reverse("users-list"), format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_single_users(self):
+        urls = reverse("users-detail", kwargs={"pk": "1"})
+        response = self.client.get(urls, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
