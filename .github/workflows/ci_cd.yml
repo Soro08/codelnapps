@@ -52,7 +52,7 @@ jobs:
                   python manage.py test
     build-and-push:  
         runs-on: ubuntu-latest
-        needs: test_project
+        needs: quality-and-test
         steps:
         - uses: actions/checkout@v3 
         - name: Create env file
@@ -83,7 +83,7 @@ jobs:
       name: Befor deploy
       runs-on: ubuntu-latest
       if: github.ref == 'refs/heads/master'
-      needs: push-image-to-docker-hub
+      needs: build-and-push
       steps:
         - uses: actions/checkout@v3
         - name: Create env file
