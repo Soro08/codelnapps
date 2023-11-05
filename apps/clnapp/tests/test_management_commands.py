@@ -26,14 +26,10 @@ class ManagementCommandsTestCase(TestCase):
         badge = Badge.objects.filter(name=BADGE_PIONNEER).first()
 
         # 1
-        user_has_badge_pionneer = UserBadge.objects.filter(
-            user=user, badge=badge
-        ).exists()
+        user_has_badge_pionneer = UserBadge.objects.filter(user=user, badge=badge).exists()
         self.assertFalse(user_has_badge_pionneer)
         call_command("assign_badge_pionneer", stdout=out)
-        user_has_badge_pionneer = UserBadge.objects.filter(
-            user=user, badge=badge
-        ).exists()
+        user_has_badge_pionneer = UserBadge.objects.filter(user=user, badge=badge).exists()
         self.assertFalse(user_has_badge_pionneer)
 
         # 2
@@ -42,9 +38,7 @@ class ManagementCommandsTestCase(TestCase):
         user.save()
         call_command("assign_badge_pionneer", stdout=out)
 
-        user_has_badge_pionneer = UserBadge.objects.filter(
-            user=user, badge=badge
-        ).exists()
+        user_has_badge_pionneer = UserBadge.objects.filter(user=user, badge=badge).exists()
 
         self.assertTrue(user_has_badge_pionneer)
 
@@ -60,9 +54,7 @@ class ManagementCommandsTestCase(TestCase):
         # 1
         self.assertFalse(model3d.nb_views > CONDITION_START)
         call_command("assign_badge_start", stdout=out)
-        user_has_badge_star = UserBadge.objects.filter(
-            user=model3d.author, badge=badge
-        ).exists()
+        user_has_badge_star = UserBadge.objects.filter(user=model3d.author, badge=badge).exists()
 
         self.assertFalse(user_has_badge_star)
         for _ in range((CONDITION_START - model3d.nb_views) + 5):
@@ -75,8 +67,6 @@ class ManagementCommandsTestCase(TestCase):
 
         call_command("assign_badge_start", stdout=out)
 
-        user_has_badge_star = UserBadge.objects.filter(
-            user=model3d.author, badge=badge
-        ).exists()
+        user_has_badge_star = UserBadge.objects.filter(user=model3d.author, badge=badge).exists()
         self.assertTrue(model3d.nb_views > CONDITION_START)
         self.assertTrue(user_has_badge_star)
