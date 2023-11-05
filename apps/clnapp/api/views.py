@@ -14,9 +14,7 @@ from .utils import increment_user_model_views
 
 class UserViewSet(viewsets.ModelViewSet):
     # use prefetch_related to optimisize queryset performance
-    queryset = User.objects.prefetch_related(
-        "userbadge_set", "userbadge_set__badge"
-    ).all()
+    queryset = User.objects.prefetch_related("userbadge_set", "userbadge_set__badge").all()
     serializer_class = UserSerializer
 
     def get_serializer_class(self):
