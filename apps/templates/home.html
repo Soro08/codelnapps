@@ -1,11 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>CodeLn: 3D models Apps</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>CodeLn 3D models API</title>
+		<link
+			rel="shortcut icon"
+			href="https://nbesoro.com/assets/logos/logo_1.svg"
+			type="image/x-icon"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		/>
 	</head>
 	<body>
-		<h1>Hello word</h1>
+		<section class="section">
+			<div class="container">
+				<h1 class="title">
+					<figure class="image" style="width: 200px">
+						<img
+							src="https://nbesoro.com/assets/logos/logo_1.svg"
+						/>
+					</figure>
+					CodeLn 3D models API
+				</h1>
+				<div class="content">
+					<h2>Fonctionnalités</h2>
+					<h4>API ROOT</h4>
+					<p>
+						Ce projet présente l'API model 3. Les fonctionnalités
+						disponibles sont les suivantes:
+					</p>
+					<ul>
+						<li>
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fas fa-lock-open"></i>
+								</span>
+								<span>lock</span>
+							</span>
+							Création de comptes utilisateur
+						</li>
+						<li>
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fas fa-lock-open"></i>
+								</span>
+								<span>lock</span>
+							</span>
+							Connexion et obtention de token jwt (Le token est
+							passé en <b>Header</b> de toutes les route protegé)
+						</li>
+
+						<li>
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fas fa-lock"></i>
+								</span>
+								<span>lock</span>
+							</span>
+							Création de model3D: Seul les utilisateur connecté
+							peuvent créer un model3D
+						</li>
+						<li>
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fas fa-lock"></i>
+								</span>
+								<span>lock</span>
+							</span>
+							Modification et suppression d'un models: Seul
+							l'autheur peut modifier ou supprimer
+						</li>
+						<li>
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fas fa-lock-open"></i>
+								</span>
+								<span>lock</span>
+							</span>
+							Afficher la liste ou le détail d'un model
+						</li>
+						<li>
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fas fa-lock-open"></i>
+								</span>
+								<span>lock</span>
+							</span>
+							Afficher la liste ou le detail d'un utilisateur afin
+							de voir ces <b>badges</b>
+						</li>
+					</ul>
+					<h4>Background tasks</h4>
+					<p>L'application contient deux type de background tacks</p>
+					<ul>
+						<li>
+							<b>Hook (signal)</b>: cette tâche s'execute à la
+							création d'un models 3D afin d'attribuer le badge
+							collector à l'utilisateur si celui-ci remplir les
+							conditions
+						</li>
+						<li>
+							<b>Peridic tack (Celery)</b>: Ici nous avons deux
+							tâche celery qui lance des commandes django à des
+							interval de temps afin d'attribuer les bagdes
+							<b>Pionner</b> et <b>Start</b>
+						</li>
+					</ul>
+
+					<h2>Lien utils</h2>
+					<ul>
+						<li>
+							API BASE URL:
+							<a
+								href="https://codeln.soronbe.com/api/"
+								target="_blank"
+								>https://codeln.soronbe.com/api/</a
+							>
+						</li>
+						<li>
+							Flower (voir l'excécution des tâches):
+							<a
+								href="http://173.212.252.63:5557/"
+								target="_blank"
+								>http://173.212.252.63:5557/</a
+							>
+						</li>
+						<li>
+							Documentation postman:
+							<a
+								href="https://documenter.getpostman.com/view/4931083/2s9YXe9581"
+								target="_blank"
+								>https://documenter.getpostman.com/view/4931083/2s9YXe9581</a
+							>
+						</li>
+						<li>
+							Depôt Github:
+							<a
+								href="https://github.com/Soro08/codelnapps"
+								target="_blank"
+								>https://github.com/Soro08/codelnapps</a
+							>
+						</li>
+						<li>
+							Autheur:
+							<a href="https://nbesoro.com/" target="_blank"
+								>https://nbesoro.com/</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
 	</body>
 </html>
