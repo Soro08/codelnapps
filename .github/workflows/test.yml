@@ -32,53 +32,21 @@ env:
     DEFAULT_EMAIL: ${{secrets.DEFAULT_EMAIL}}
 
 jobs:
-
-    befor-deploy:
-      name: Befor deploy
-      runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/master'
-      needs: push-image-to-docker-hub
-      steps:
-        - uses: actions/checkout@v3
-        - name: Create env file
-          run: |
-            chmod +x ./apps/setup_env.ci.sh
-            bash ./apps/setup_env.ci.sh
-        - name: copy file via ssh key
-          uses: appleboy/scp-action@v0.1.4
-          with:
-            host: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
-            username: ${{secrets.SERVER_USER}}
-            key: ${{secrets.PRIVATE_KEY}}
-            port: 22
-            source: "./nginx, ./.env, ./.env.proxy-companion, ./docker-compose.prod.yml"
-            target: "/${{secrets.SERVER_USER}}/project/"
-
-    deploy:
-      runs-on: ubuntu-latest  # Utilisez l'image Ubuntu par défaut
-      if: github.ref == 'refs/heads/master'
-      needs: befor-deploy
-      steps:
-        - uses: actions/checkout@v3
-        - name: docker login
-          run: | # log into docker hub account
-            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY
-        - name: Deploy using ssh
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{secrets.DEPLOY_PUBLIC_IP_ADDRESS}}
-            username: ${{secrets.SERVER_USER}}
-            key: ${{secrets.PRIVATE_KEY}}
-            port: 22
-            script: |
-              cd /${{secrets.SERVER_USER}}/project/
-              export $(cat .env | xargs)
-              docker pull push $WEB_IMAGE
-              docker pull $NGINX_IMAGE
-              docker pull $CELERY_IMAGE
-              docker pull $BEAT_IMAGE
-              docker pull $DASH_IMAGE
-              docker-compose -f docker-compose.prod.yml down || true
-              docker rm -vf $(docker ps -aq) || true
-              docker rmi -f $(docker images -aq) || true
-              docker-compose -f docker-compose.prod.yml up -d
+    test_project:
+        runs-on: ubuntu-latest # operating system your code will run on
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v2
+            - name: Run script file
+              run: |
+                  chmod +x ./apps/setup_env.sh
+                  bash ./apps/setup_env.sh
+                  cp ./apps/codeln3d/settings/base.ci.py ./apps/codeln3d/settings/base.py
+            - run: cat ./apps/.env
+            - run: pip install flake8
+            - run: pip install setuptools
+            - run: pip install -r apps/requirements.txt # install all our dependencies for the project
+            - run: flake8 . # run flake8 test
+            - run: |
+                  cd apps/
+                  python manage.py test
