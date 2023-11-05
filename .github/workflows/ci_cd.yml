@@ -54,10 +54,12 @@ jobs:
               run: |
                   cd apps/
                   black . -l 129 --extend-exclude ".*\b(migrations)\b.*" --check
-            - name: run test
+            - name: run test and check coverage
               run: |
                   cd apps/
-                  python manage.py test
+                  chmod +x ./runtest.sh 
+                  bash ./runtest.sh
+
     build-and-push:
         runs-on: ubuntu-latest
         needs: quality-and-test
