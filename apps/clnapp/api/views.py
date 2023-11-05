@@ -9,13 +9,12 @@ from .serializers import (
     Model3dDetailSerializer,
 )
 from .permissions import AuthorOrReadOnly
+from .utils import increment_user_model_views
 
 
 class UserViewSet(viewsets.ModelViewSet):
     # use prefetch_related to optimisize queryset performance
-    queryset = User.objects.prefetch_related(
-        "userbadge_set", "userbadge_set__badge"
-    ).all()
+    queryset = User.objects.prefetch_related("userbadge_set", "userbadge_set__badge").all()
     serializer_class = UserSerializer
 
     def get_serializer_class(self):
@@ -42,3 +41,8 @@ class Model3dViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    def retrieve(self, request, *args, **kwargs):
+        item = self.get_object()
+        increment_user_model_views(item)
+        return super().retrieve(request, *args, **kwargs)

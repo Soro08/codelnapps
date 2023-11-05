@@ -49,7 +49,8 @@ class Migration(migrations.Migration):
                 (
                     "badge",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.PROTECT, to="clnapp.badge"
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="clnapp.badge",
                     ),
                 ),
                 (

@@ -25,17 +25,13 @@ class Model3dHookTestCase(TestCase):
         # befor test
         self.assertNotEqual(Model3d.objects.filter(author=user).count(), 5)
 
-        self.assertFalse(
-            UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0
-        )
+        self.assertFalse(UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0)
 
         # --------- beguin test
 
         # login user with jwt
         data = {"username": user.username, "password": "AzertyKlm"}
-        login_response = self.client.post(
-            reverse("token_obtain_pair"), data, format="json"
-        )
+        login_response = self.client.post(reverse("token_obtain_pair"), data, format="json")
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
         login_data = login_response.json()
         access = login_data.get("access")
@@ -49,9 +45,7 @@ class Model3dHookTestCase(TestCase):
 
         # Créez 5 modèles en envoyant une requête POST répétée
         # for _ in range(5):
-        response = self.client.post(
-            reverse("model3d-list"), data, format="multipart", headers=headers
-        )
+        response = self.client.post(reverse("model3d-list"), data, format="multipart", headers=headers)
         # print(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -59,9 +53,7 @@ class Model3dHookTestCase(TestCase):
         # Vérifiez si 5 modèles ont été créés dans la base de données
         self.assertEqual(Model3d.objects.filter(author=user).count(), 5)
 
-        self.assertTrue(
-            UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0
-        )
+        self.assertTrue(UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0)
 
     def test_add_less_than_5_model3d(self):
         """
@@ -81,15 +73,11 @@ class Model3dHookTestCase(TestCase):
 
         # 1.
         self.assertNotEqual(Model3d.objects.filter(author=user).count(), 5)
-        self.assertFalse(
-            UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0
-        )
+        self.assertFalse(UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0)
 
         # 2.
         data = {"username": user.username, "password": "soro"}
-        login_response = self.client.post(
-            reverse("token_obtain_pair"), data, format="json"
-        )
+        login_response = self.client.post(reverse("token_obtain_pair"), data, format="json")
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
         login_data = login_response.json()
         access = login_data.get("access")
@@ -102,13 +90,9 @@ class Model3dHookTestCase(TestCase):
         }
         headers = {"Authorization": f"Bearer {access}"}
 
-        response = self.client.post(
-            reverse("model3d-list"), data, format="multipart", headers=headers
-        )
+        response = self.client.post(reverse("model3d-list"), data, format="multipart", headers=headers)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # 4
         self.assertNotEqual(Model3d.objects.filter(author=user).count(), 5)
-        self.assertFalse(
-            UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0
-        )
+        self.assertFalse(UserBadge.objects.filter(user=user, badge__name=BADGE_COLLECTOR).count() > 0)
