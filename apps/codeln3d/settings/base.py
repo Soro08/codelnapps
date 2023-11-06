@@ -21,15 +21,19 @@ DATABASES = {
     },
     "codeln": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
+        "NAME": str(os.environ.get("DB_NAME")),
+        "USER": str(os.environ.get("DB_USER")),
+        "PASSWORD": str(os.environ.get("DB_PASSWORD")),
+        "HOST": str(os.environ.get("DB_HOST")),
+        "PORT": str(os.environ.get("DB_PORT")),
         "DISABLE_SERVER_SIDE_CURSORS": True,
     },
 }
-DATABASES["default"] = DATABASES["sqlite3"]
+USE_POSTGRES_DATABASE = int(os.environ.get("USE_POSTGRES_DATABASE", default=0))
+if USE_POSTGRES_DATABASE:
+    DATABASES["default"] = DATABASES["codeln"]
+else:
+    DATABASES["default"] = DATABASES["sqlite3"]
 
 ##########
 # internationalization
