@@ -1,7 +1,17 @@
-from django.db.models.signals import post_save
-from clnapp.badge import user_has_badge, add_user_bage
-from clnapp.models.constants import BADGE_COLLECTOR, CONDITION_COLLECTOR
-from clnapp.models import Model3d
+from django.db.models.signals import (
+    post_save,
+)
+from clnapp.badge import (
+    user_has_badge,
+    add_user_bage,
+)
+from clnapp.models.constants import (
+    BADGE_COLLECTOR,
+    CONDITION_COLLECTOR,
+)
+from clnapp.models import (
+    Model3d,
+)
 
 
 def user_has_collecter(sender, instance, created, update_fields=None, **kwargs):
@@ -17,8 +27,17 @@ def user_has_collecter(sender, instance, created, update_fields=None, **kwargs):
     """
     if created:
         nb = instance.author.model3d_set.count()
-        if nb >= CONDITION_COLLECTOR and not user_has_badge(instance.author, BADGE_COLLECTOR):
-            add_user_bage(instance.author, BADGE_COLLECTOR)
+        if nb >= CONDITION_COLLECTOR and not user_has_badge(
+            instance.author,
+            BADGE_COLLECTOR,
+        ):
+            add_user_bage(
+                instance.author,
+                BADGE_COLLECTOR,
+            )
 
 
-post_save.connect(user_has_collecter, sender=Model3d)
+post_save.connect(
+    user_has_collecter,
+    sender=Model3d,
+)

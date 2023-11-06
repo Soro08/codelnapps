@@ -1,11 +1,17 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import (
+    load_dotenv,
+)
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "codeln.soronbe.com"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "codeln.soronbe.com",
+]
 # Security
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
@@ -29,7 +35,12 @@ DATABASES = {
         "DISABLE_SERVER_SIDE_CURSORS": True,
     },
 }
-USE_POSTGRES_DATABASE = int(os.environ.get("USE_POSTGRES_DATABASE", default=0))
+USE_POSTGRES_DATABASE = int(
+    os.environ.get(
+        "USE_POSTGRES_DATABASE",
+        default=0,
+    )
+)
 if USE_POSTGRES_DATABASE:
     DATABASES["default"] = DATABASES["codeln"]
 else:
@@ -54,4 +65,7 @@ SECURE_HSTS_SECONDS = 86400  # 1 day
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_PROXY_SSL_HEADER = (
+    "HTTP_X_FORWARDED_PROTO",
+    "https",
+)

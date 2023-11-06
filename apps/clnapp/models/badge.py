@@ -1,4 +1,6 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import (
+    User,
+)
 from django.db import models
 
 
@@ -21,14 +23,24 @@ class Badge(models.Model):
 class UserBadge(models.Model):
     """Model definition for UserBadge."""
 
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    badge = models.ForeignKey(Badge, on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+    )
+    badge = models.ForeignKey(
+        Badge,
+        on_delete=models.PROTECT,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     ordering = ["id"]
 
     class Meta:
         """Meta definition for User Badge."""
 
+        unique_together = (
+            "user",
+            "badge",
+        )
         verbose_name = "User Badge"
         verbose_name_plural = "Users Badges"
 

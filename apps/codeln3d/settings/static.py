@@ -1,12 +1,19 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import (
+    load_dotenv,
+)
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-USE_AWS_S3 = int(os.environ.get("USE_AWS_S3", default=0))
+USE_AWS_S3 = int(
+    os.environ.get(
+        "USE_AWS_S3",
+        default=0,
+    )
+)
 if USE_AWS_S3:
     # aws settings
     AWS_LOCATION = "static"
