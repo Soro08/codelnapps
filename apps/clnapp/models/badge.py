@@ -29,6 +29,7 @@ class UserBadge(models.Model):
     class Meta:
         """Meta definition for User Badge."""
 
+        unique_together = ("user", "badge")
         verbose_name = "User Badge"
         verbose_name_plural = "Users Badges"
 

@@ -8,8 +8,11 @@ def add_user_bage(user, badge_name):
     if not user_has_badge(user, badge_name):
         badge = Badge.objects.filter(name=badge_name).first()
         if badge:
-            ub = UserBadge(badge=badge, user=user)
-            ub.save()
+            try:
+                ub = UserBadge(badge=badge, user=user)
+                ub.save()
+            except Exception as e:
+                print(str(e))
         else:
             print("Badge Not found")
 
