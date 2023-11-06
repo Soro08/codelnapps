@@ -16,8 +16,8 @@ Une fois que Docker et Docker Compose sont installés, suivez ces étapes :
 1. Clonez le dépôt depuis GitHub :
 
     ````bash
-    git clone https://github.com/votreutilisateur/mon-projet.git
-    cd mon-projet```
+    git clone https://github.com/Soro08/codelnapps.git
+    cd codelnapps
 
     ````
 
