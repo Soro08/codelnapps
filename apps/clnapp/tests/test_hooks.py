@@ -42,14 +42,11 @@ class Model3dHookTestCase(TestCase):
             Model3d.objects.filter(author=user).count(),
             5,
         )
-
-        self.assertFalse(
-            UserBadge.objects.filter(
-                user=user,
-                badge__name=BADGE_COLLECTOR,
-            ).count()
-            > 0
-        )
+        nb_b = UserBadge.objects.filter(
+            user=user,
+            badge__name=BADGE_COLLECTOR,
+        ).count()
+        self.assertFalse(nb_b > 0)
 
         # --------- beguin test
 
@@ -97,14 +94,11 @@ class Model3dHookTestCase(TestCase):
             Model3d.objects.filter(author=user).count(),
             5,
         )
-
-        self.assertTrue(
-            UserBadge.objects.filter(
-                user=user,
-                badge__name=BADGE_COLLECTOR,
-            ).count()
-            > 0
-        )
+        nb_b = UserBadge.objects.filter(
+            user=user,
+            badge__name=BADGE_COLLECTOR,
+        ).count()
+        self.assertTrue(nb_b > 0)
 
     def test_add_less_than_5_model3d(
         self,
@@ -129,13 +123,11 @@ class Model3dHookTestCase(TestCase):
             Model3d.objects.filter(author=user).count(),
             5,
         )
-        self.assertFalse(
-            UserBadge.objects.filter(
-                user=user,
-                badge__name=BADGE_COLLECTOR,
-            ).count()
-            > 0
-        )
+        nb_b = UserBadge.objects.filter(
+            user=user,
+            badge__name=BADGE_COLLECTOR,
+        ).count()
+        self.assertFalse(nb_b > 0)
 
         # 2.
         data = {
@@ -178,10 +170,8 @@ class Model3dHookTestCase(TestCase):
             Model3d.objects.filter(author=user).count(),
             5,
         )
-        self.assertFalse(
-            UserBadge.objects.filter(
-                user=user,
-                badge__name=BADGE_COLLECTOR,
-            ).count()
-            > 0
-        )
+        nb_b = UserBadge.objects.filter(
+            user=user,
+            badge__name=BADGE_COLLECTOR,
+        ).count()
+        self.assertFalse(nb_b > 0)
