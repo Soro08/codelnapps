@@ -1,6 +1,6 @@
 # BADGES
 BADGE_COLLECTOR = "Collector"
-BADGE_START = "Start"
+BADGE_START = "Star"
 BADGE_PIONNEER = "Pionneer"
 
 # BADGES CONDITION

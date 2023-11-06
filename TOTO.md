@@ -32,10 +32,10 @@ Exemples de badges:
 5. [ ] Mettre en place la logique du projet
 
     1. [x] Mettre en place le hooks: ajout du badge `collector` si l'utilisateur atteint les 5 model2d
-    2. [ ] Ajouter et configurer celery pour gérer les taches en arrière plan:
+    2. [x] Ajouter et configurer celery pour gérer les taches en arrière plan:
 
-        - [ ] Une tache qui s'exécute toutes les 10 secondes et vérifie si l'un des model3d de l'utilisateur a atteint les 1000 veus et lui attribut le badge `Star`
-        - [ ] Une tache qui s'exécute toutes les jours à 00h00 et vérifie si l'utilisateur a atteint les les 1 and d'ancienneté et lui attribut le badge `Pionneer`
+        - [x] Une tache qui s'exécute toutes les 10 secondes et vérifie si l'un des model3d de l'utilisateur a atteint les 1000 veus et lui attribut le badge `Star`
+        - [x] Une tache qui s'exécute toutes les jours à 00h00 et vérifie si l'utilisateur a atteint les les 1 and d'ancienneté et lui attribut le badge `Pionneer`
 
 6. Ecriture des tests
 

@@ -19,4 +19,4 @@ class Command(BaseCommand):
         for m3d in model3ds:
             add_user_bage(m3d.author, BADGE_START)
 
-        self.stdout.write(self.style.SUCCESS(f"{m3d.count()} badge distribués."))
+        self.stdout.write(self.style.SUCCESS("badge distribués."))
