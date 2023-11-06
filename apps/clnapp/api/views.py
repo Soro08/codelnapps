@@ -1,24 +1,42 @@
-from rest_framework import viewsets
-from django.contrib.auth.models import User
+from rest_framework import (
+    viewsets,
+)
+from django.contrib.auth.models import (
+    User,
+)
 
-from clnapp.models import Model3d
+from clnapp.models import (
+    Model3d,
+)
 from .serializers import (
     Model3dSerializer,
     UserSerializer,
     UserDetailSerializer,
     Model3dDetailSerializer,
 )
-from .permissions import AuthorOrReadOnly
-from .utils import increment_user_model_views
+from .permissions import (
+    AuthorOrReadOnly,
+)
+from .utils import (
+    increment_user_model_views,
+)
 
 
 class UserViewSet(viewsets.ModelViewSet):
     # use prefetch_related to optimisize queryset performance
-    queryset = User.objects.prefetch_related("userbadge_set", "userbadge_set__badge").all()
+    queryset = User.objects.prefetch_related(
+        "userbadge_set",
+        "userbadge_set__badge",
+    ).all()
     serializer_class = UserSerializer
 
-    def get_serializer_class(self):
-        if self.action in ["retrieve", "list"]:
+    def get_serializer_class(
+        self,
+    ):
+        if self.action in [
+            "retrieve",
+            "list",
+        ]:
             return UserDetailSerializer
         return super().get_serializer_class()
 
@@ -34,8 +52,13 @@ class Model3dViewSet(viewsets.ModelViewSet):
     serializer_class = Model3dSerializer
     permission_classes = [AuthorOrReadOnly]
 
-    def get_serializer_class(self):
-        if self.action in ["retrieve", "list"]:
+    def get_serializer_class(
+        self,
+    ):
+        if self.action in [
+            "retrieve",
+            "list",
+        ]:
             return Model3dDetailSerializer
         return super().get_serializer_class()
 

@@ -1,4 +1,7 @@
-from clnapp.models import Badge, UserBadge
+from clnapp.models import (
+    Badge,
+    UserBadge,
+)
 
 
 def add_user_bage(user, badge_name):
@@ -9,7 +12,10 @@ def add_user_bage(user, badge_name):
         badge = Badge.objects.filter(name=badge_name).first()
         if badge:
             try:
-                ub = UserBadge(badge=badge, user=user)
+                ub = UserBadge(
+                    badge=badge,
+                    user=user,
+                )
                 ub.save()
             except Exception as e:
                 print(str(e))
@@ -21,7 +27,10 @@ def user_has_badge(user, badge_name):
     """
     Check if the user already has a specific badge
     """
-    if UserBadge.objects.filter(badge__name=badge_name, user=user).exists():
+    if UserBadge.objects.filter(
+        badge__name=badge_name,
+        user=user,
+    ).exists():
         return True
     else:
         return False

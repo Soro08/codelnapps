@@ -1,11 +1,24 @@
-from django.contrib.auth.models import User
-from rest_framework import serializers
-from clnapp.models import Model3d, UserBadge, Badge
-from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.models import (
+    User,
+)
+from rest_framework import (
+    serializers,
+)
+from clnapp.models import (
+    Model3d,
+    UserBadge,
+    Badge,
+)
+from django.contrib.auth.password_validation import (
+    validate_password,
+)
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(
+        write_only=True,
+        required=True,
+    )
 
     class Meta:
         model = User
@@ -18,7 +31,12 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
             "password2",
         ]
-        extra_kwargs = {"password": {"write_only": True, "validators": [validate_password]}}
+        extra_kwargs = {
+            "password": {
+                "write_only": True,
+                "validators": [validate_password],
+            }
+        }
 
     def validate(self, data):
         if data["password"] != data["password2"]:
@@ -38,15 +56,28 @@ class UserBadgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserBadge
-        exclude = ["id", "user", "created_at"]
+        exclude = [
+            "id",
+            "user",
+            "created_at",
+        ]
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    badges = UserBadgeSerializer(many=True, source="userbadge_set")
+    badges = UserBadgeSerializer(
+        many=True,
+        source="userbadge_set",
+    )
 
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "badges", "date_joined"]
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "badges",
+            "date_joined",
+        ]
 
 
 class Model3dSerializer(serializers.ModelSerializer):
@@ -63,6 +94,9 @@ class Model3dDetailSerializer(Model3dSerializer):
     class EmbeddedUserSerilizer(serializers.ModelSerializer):
         class Meta:
             model = User
-            fields = ["first_name", "last_name"]
+            fields = [
+                "first_name",
+                "last_name",
+            ]
 
     author = EmbeddedUserSerilizer()

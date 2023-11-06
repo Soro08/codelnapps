@@ -1,16 +1,32 @@
-from celery import shared_task, Task
-from django.core.management import call_command
-from celery.utils.log import get_task_logger
+from celery import (
+    shared_task,
+    Task,
+)
+from django.core.management import (
+    call_command,
+)
+from celery.utils.log import (
+    get_task_logger,
+)
 
 logger = get_task_logger(__name__)
 
 
 class BaseTaskWithRetry(Task):
-    autoretry_for = (Exception, KeyError)
-    retry_kwargs = {"max_retries": 7, "countdown": 5}
+    autoretry_for = (
+        Exception,
+        KeyError,
+    )
+    retry_kwargs = {
+        "max_retries": 7,
+        "countdown": 5,
+    }
 
 
-@shared_task(bind=True, base=BaseTaskWithRetry)
+@shared_task(
+    bind=True,
+    base=BaseTaskWithRetry,
+)
 def assign_star_badge(self):
     try:
         call_command(
@@ -21,8 +37,13 @@ def assign_star_badge(self):
         raise Exception()
 
 
-@shared_task(bind=True, base=BaseTaskWithRetry)
-def assign_pionneer_badge(self):
+@shared_task(
+    bind=True,
+    base=BaseTaskWithRetry,
+)
+def assign_pionneer_badge(
+    self,
+):
     try:
         call_command(
             "assign_badge_pionneer",
