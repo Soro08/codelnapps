@@ -16,6 +16,13 @@ env:
     AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
     AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
     AWS_STORAGE_BUCKET_NAME: ${{secrets.AWS_STORAGE_BUCKET_NAME}}
+    # DATABASE
+    USE_POSTGRES_DATABASE: ${{ secrets.USE_POSTGRES_DATABASE }}
+    DB_NAME: ${{ secrets.DB_NAME }}
+    DB_USER: ${{ secrets.DB_USER }}
+    DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+    DB_HOST: ${{ secrets.DB_HOST }}
+    DB_PORT: ${{ secrets.DB_PORT }}
     # Docker images
     DOCKER_USER: ${{secrets.DOCKER_USER}}
     DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
@@ -44,7 +51,6 @@ jobs:
                   chmod +x ./apps/setup_env.sh
                   bash ./apps/setup_env.sh
                   cp ./apps/codeln3d/settings/base.ci.py ./apps/codeln3d/settings/base.py
-            - run: cat ./apps/.env
             - run: pip install flake8
             - run: pip install setuptools>=65.5.1 wheel>=0.38.1
             - run: pip install -r apps/requirements.txt # install all our dependencies for the project
