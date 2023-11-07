@@ -39,9 +39,16 @@ Une fois que Docker et Docker Compose sont installés, suivez ces étapes :
 
     ```bash
     $ docker-compose -f docker-compose.local.yml up -d
+    $ docker-compose -f docker-compose.local.yml exec web python manage.py create_badges
+
+    $ docker-compose -f docker-compose.local.yml exec web python manage.py createsuperuser
     ```
 
-5. Les conteneurs Docker seront démarrés, et l'application sera accessible à l'adresse http://localhost:8000 .
+5. Les conteneurs Docker seront démarrés, et l'application sera accessible à l'adresse:
+
+- http://localhost:8000
+- http://localhost:8000/api/
+- http://localhost:8000/admin
 
 ### Sans Docker
 
@@ -96,7 +103,12 @@ Assurer vous d'avoir **redis** installé sur votre machine
     (venv)$ python manage.py runserver
     ```
     
-l'application sera accessible à l'adresse http://localhost:8000 .
+l'application sera accessible à l'adresse:
+
+- http://localhost:8000
+- http://localhost:8000/api/
+- http://localhost:8000/admin
+
 ## Fonctionnalités disponibles:
 
 Vous pouvez accéder à la liste des fonctionnalitées de l'application à l'adresse suivante : https://codeln.soronbe.com/
