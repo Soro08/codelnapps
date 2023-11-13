@@ -32,11 +32,11 @@ class UserBadge(models.Model):
         on_delete=models.PROTECT,
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    ordering = ["id"]
 
     class Meta:
         """Meta definition for User Badge."""
 
+        ordering = ["id"]
         unique_together = (
             "user",
             "badge",
