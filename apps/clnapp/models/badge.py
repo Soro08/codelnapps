@@ -35,6 +35,7 @@ class UserBadge(models.Model):
 
     class Meta:
         """Meta definition for User Badge."""
+
         ordering = ["id"]
         unique_together = (
             "user",
