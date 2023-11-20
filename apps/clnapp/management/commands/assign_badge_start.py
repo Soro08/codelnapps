@@ -28,7 +28,9 @@ class Command(BaseCommand):
             user=OuterRef("author"),
         ).values("user")
 
-        model3ds = Model3d.objects.annotate(has_star_badge=Subquery(users_with_star_badge)).filter(
+        model3ds = Model3d.objects.annotate(
+            has_star_badge=Subquery(users_with_star_badge)
+        ).filter(
             nb_views__gte=CONDITION_START,
             has_star_badge=None,
         )

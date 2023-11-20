@@ -1,6 +1,7 @@
 from django.db.models.signals import (
     post_save,
 )
+from django.contrib.auth.models import User
 from clnapp.badge import (
     user_has_badge,
     add_user_bage,
