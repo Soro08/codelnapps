@@ -98,19 +98,46 @@
 						</li>
 					</ul>
 					<h4>Background tasks</h4>
-					<p>L'application contient deux type de background tacks</p>
+					<p>
+						<strike>
+							L'application contient deux type de background tacks
+						</strike>
+					</p>
+					<p>
+						(<span class="has-text-success-dark">New</span>) Les
+						background tasks fonctionne grâce à différents hooks
+						(signal)
+					</p>
 					<ul>
 						<li>
-							<b>Hook (signal)</b>: cette tâche s'execute à la
-							création d'un models 3D afin d'attribuer le badge
-							collector à l'utilisateur si celui-ci remplir les
-							conditions
+							<b>Hook (signal) Collector</b>: cette tâche
+							s'execute à la création d'un models 3D afin
+							d'attribuer le badge collector à l'utilisateur si
+							celui-ci remplir les conditions
 						</li>
 						<li>
-							<b>Peridic tack (Celery)</b>: Ici nous avons deux
-							tâche celery qui lance des commandes django à des
-							interval de temps afin d'attribuer les bagdes
-							<b>Pionner</b> et <b>Start</b>
+							<b>
+								(<span class="has-text-success-dark">New</span>)
+								Hook (signal) Pionneer</b
+							>: cette tâche s'execute à chaque authentification
+							de l'utilisateur afin d'attribuer le badge pionneer
+							à l'utilisateur si celui-ci remplir les conditions
+						</li>
+						<li>
+							<b>
+								(<span class="has-text-success-dark">New</span>)
+								Hook (signal) Star</b
+							>: cette tâche s'execute à chaque vue d'un model3D
+							de l'utilisateur afin d'attribuer le badge star à
+							l'utilisateur si celui-ci remplir les conditions
+						</li>
+						<li>
+							<strike>
+								<b>Peridic tack (Celery)</b>: Ici nous avons
+								deux tâche celery qui lance des commandes django
+								à des interval de temps afin d'attribuer les
+								bagdes <b>Pionner</b> et <b>Start</b>
+							</strike>
 						</li>
 					</ul>
 
@@ -124,14 +151,7 @@
 								>https://codeln.soronbe.com/api/</a
 							>
 						</li>
-						<li>
-							Flower (voir l'excécution des tâches):
-							<a
-								href="http://173.212.252.63:5557/"
-								target="_blank"
-								>http://173.212.252.63:5557/</a
-							>
-						</li>
+						
 						<li>
 							Documentation postman:
 							<a
