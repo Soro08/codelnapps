@@ -19,7 +19,7 @@ from clnapp.models.constants import (
 )
 
 
-class Model3dHookTestCase(TestCase):
+class HookStarTestCase(TestCase):
     def test_add_greater_than_5_model3d(
         self,
     ):

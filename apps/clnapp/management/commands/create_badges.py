@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from clnapp.models import Badge
-from clnapp.models.constants import BADGE_COLLECTOR, BADGE_START, BADGE_PIONNEER
+from clnapp.models.constants import BADGE_COLLECTOR, BADGE_STAR, BADGE_PIONNEER
 
 
 class Command(BaseCommand):
@@ -10,7 +10,7 @@ class Command(BaseCommand):
         badges = [
             {"name": BADGE_COLLECTOR, "logo": "badge/collector.png"},
             {"name": BADGE_PIONNEER, "logo": "badge/pionner.png"},
-            {"name": BADGE_START, "logo": "badge/star.png"},
+            {"name": BADGE_STAR, "logo": "badge/star.png"},
         ]
         for badge in badges:
             Badge.objects.get_or_create(
