@@ -1,7 +1,6 @@
 from django.db.models.signals import (
     post_save,
 )
-from django.contrib.auth.models import User
 from clnapp.badge import (
     user_has_badge,
     add_user_bage,
@@ -15,7 +14,7 @@ from clnapp.models import (
 )
 
 
-def user_has_collecter(sender, instance, created, update_fields=None, **kwargs):
+def assign_collecter_badge(sender, instance, created, update_fields=None, **kwargs):
     """
     Vérifier si l'utilisateur a plus de 5 model3d
     lui attribuler le badge Collector
@@ -39,6 +38,6 @@ def user_has_collecter(sender, instance, created, update_fields=None, **kwargs):
 
 
 post_save.connect(
-    user_has_collecter,
+    assign_collecter_badge,
     sender=Model3d,
 )

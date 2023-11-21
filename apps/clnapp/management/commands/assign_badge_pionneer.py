@@ -21,31 +21,24 @@ from clnapp.models.constants import (
 
 
 class Command(BaseCommand):
-    help = (
-        "This command awards the pioneer badge to all users with one year's seniority."
-    )
+    help = "This command awards the pioneer badge to all users with one year's seniority."
 
     def handle(
         self,
         *args,
         **options,
     ):
-        one_year_ago = timezone.now() - timezone.timedelta(days=CONDITION_PIONNEER)
+        pass
+        # one_year_ago = timezone.now() - timezone.timedelta(days=CONDITION_PIONNEER)
 
-        users_without_pioneer_badge = User.objects.filter(
-            date_joined__lt=one_year_ago
-        ).exclude(
-            id__in=UserBadge.objects.filter(badge__name="pionnier").values("user")
-        )
+        # users_without_pioneer_badge = User.objects.filter(date_joined__lt=one_year_ago).exclude(
+        #     id__in=UserBadge.objects.filter(badge__name="pionnier").values("user")
+        # )
 
-        for user in users_without_pioneer_badge:
-            add_user_bage(
-                user,
-                BADGE_PIONNEER,
-            )
+        # for user in users_without_pioneer_badge:
+        #     add_user_bage(
+        #         user,
+        #         BADGE_PIONNEER,
+        #     )
 
-        self.stdout.write(
-            self.style.SUCCESS(
-                f"{users_without_pioneer_badge.count()} badge distribués."
-            )
-        )
+        # self.stdout.write(self.style.SUCCESS(f"{users_without_pioneer_badge.count()} badge distribués."))

@@ -1,2 +1,3 @@
-from .m3d import *
-from .pionneer_bages import *
+from .collector_badges import *
+from .pionneer_badges import *
+from .star_badges import *
