@@ -52,7 +52,6 @@ Une fois que Docker et Docker Compose sont installés, suivez ces étapes :
 
 ### Sans Docker
 
-Assurer vous d'avoir **redis** installé sur votre machine
 
 1. Clonez le dépôt depuis GitHub :
 
